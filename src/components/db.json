@@ -1,0 +1,14 @@
+[
+    {
+        "id":"1",
+        "name":"Nagercoil Guest House",
+        "image":"https://th.bing.com/th/id/OIP.fa5zvPbNHusZ3D2hkMsWqwHaDD?w=328&h=144&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        "location":"Nagercoil,Tamilnadu"
+    },
+    {
+        "id":2,
+        "name":"Kanyakumari Guest House",
+        "image":"https://i.ytimg.com/vi/lMSdxkPLvpU/maxresdefault.jpg",
+        "location":"Kanyakumari,Tamilnadu"
+    }
+]
