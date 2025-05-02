@@ -1,0 +1,178 @@
+import React from "react";
+import { Box, Typography, Grid,Link, } from "@mui/material";
+import { useLocation } from "react-router-dom";
+import data from "../db.json"
+// import design from '/public/assets/Images/headerbackblue.png'
+// import logo from "./image 1 (1).png"
+import { useState,useEffect } from "react";
+
+export const ConfirmBooking = () => {
+  const location = useLocation();
+  const { checkIn, checkOut, noOfRoom, noOfGuest, guestHouse, room } = location.state || {};
+
+  // Now you can use those variables in your component.
+  console.log(checkIn, checkOut, noOfRoom, noOfGuest, guestHouse, room);
+  const item = data.find(
+    (item) => item.name && item.name.toLowerCase() === guestHouse.toLowerCase()
+  );
+  
+  console.log("Matched Item:", item);
+  // HEADER
+  // const location = useLocation();
+    const isBookingDetailsPage = location.pathname === "/BookingDetails";
+  
+       const [timeLeft, setTimeLeft] = useState(0); // Timer in seconds
+        const [otpSent, setOtpSent] = useState(false);
+        const [otp, setOtp] = useState('')
+      
+        
+        useEffect(() => {
+          let timer;
+          if (timeLeft > 0) {
+            timer = setInterval(() => {
+              setTimeLeft(prev => prev - 1);
+            }, 1000);
+          }
+      
+          return () => clearInterval(timer);
+        }, [timeLeft])
+      
+        const handleSendOtp = () => {
+          setOtpSent(true);
+          setTimeLeft(120); // 2 minutes
+          // Here you can trigger actual OTP send logic
+          console.log("OTP sent!");
+        };
+      
+        const formatTime = (seconds) => {
+          const min = String(Math.floor(seconds / 60)).padStart(2, '0');
+          const sec = String(seconds % 60).padStart(2, '0');
+          return `${min}:${sec}`;
+        };
+      
+      
+        const items=[
+          {name:"Home",id:"home"},
+          {name:'Gallery',id:"gallery"},
+          {name:"Location",id:"location"}
+        ]
+      
+         const [manageopen,setManageopen]=useState(false)
+          const [activePage, setActivePage] = useState("home");
+         
+         
+          
+    const handlenav = (id) => {
+      setActivePage(id);
+  
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+  return (
+    <Box sx={{height:"100%",width:'100%'}}>
+      {/* HEADER */}
+      <Grid container sx={{width:"100%",height:'100px'}}>
+            <Grid size={{lg:12}} sx={{height:"111px",display: 'flex',alignItems:"center",justifyContent:"space-between"}}>
+                                    <Typography sx={{color:"black"}} variant='h5' color='white' ml={5}>Kanniyakumari<span style={{fontSize:"15px",color:"black"}}>.in</span></Typography>
+                                    <Box
+                                      sx={{
+                                        height: '170px',
+                                        width: '46%',
+                                        backgroundImage: `url(${process.env.PUBLIC_URL}/assets/Images/headerbackblue.png)`,
+                                        backgroundPosition:"center",
+                                        backgroundSize:"contain",
+                                        backgroundRepeat:"no-repeat",
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-evenly',
+                                        marginTop:"-36px",
+                                        alt:"not found"
+                                        
+                                      }}
+                                    >
+                                   <img src="/assets/Images/image 1 (1).png" alt="not found" style={{height:"60px",width:"60px",objectFit:"contain",marginLeft:"20px"}}/>
+                                   <Grid >
+                                   {items.map((item)=>(
+                                         <Link component="button"  onClick={()=>handlenav(item.id)} underline='none' sx={{color:"white",fontSize:"15px",
+                                          // textDecoration: item.id === activePage ? 'underline' : 'none',
+                                          // textDecorationColor: item.id === activePage ? 'blue' : 'transparent',
+                                          // textDecorationThickness: item.id === activePage ? '5px' : undefined,
+                                          // textUnderlineOffset: item.id === activePage ? '10px' : undefined,
+                                          '&:hover': {textDecoration: 'underline'
+                                            ,textDecorationColor: 'blue',  
+                                            textDecorationThickness:"5px",
+                                            textUnderlineOffset: '10px',
+                                     },mx:4}}>{item.name}</Link>
+                                   ))}
+                                   </Grid>
+                                  
+                                   
+                                    </Box>
+                                   
+                                   <Link component="button" underline='none'  onClick={()=>setManageopen(true)} >
+                                   <Box  sx={{ backgroundImage:"url(/button.png)",height:"60px",backgroundSize:"contain",mx:5,backgroundRepeat:"no-repeat",color:"white",display:"flex",alignItems:"center",justifyContent:"center",textAlign:"center",marginTop:"-13px",cursor:"pointer"}}>
+                                      <Typography variant='h6' sx={{mx:2,fontWeight: 600}}></Typography>
+                                      
+                                   </Box>
+                                   </Link>
+                                   
+                        </Grid>
+        </Grid>
+      {/* BODY */}
+        <Box sx={{width:"100%",height:"370px",display:'flex',justifyContent:'center',alignItems:"center"}}>
+        <Box sx={{width:"80%",height:"300px",borderRadius:"5px",overflow:"hidden",display:"flex",justifyContent:"center",boxShadow:"2"}}>
+          <Box sx={{width:"95%",height:"100%"}}>
+            <Box sx={{width:"100%",height:"80px",display:'flex',flexDirection:"column",justifyContent:"center"}}>
+              <Typography variant="h5">Your Booking</Typography>
+              <Box sx={{width:"140px",height:"2px",bgcolor:"grey"}}></Box>
+            </Box>
+            <Box sx={{width:"100%",height:"220px",display:"flex",alignItems:"center"}}>
+              <Grid container sx={{width:"100%",height:"190px",display:"flex",justifyContent:"space-between"}}>
+                <Grid items size={{lg:2}} sx={{width:"100%",height:"100%",borderRadius:"20px"}} component="img" src={item ? item.image : "https://img1.10bestmedia.com/Images/Photos/378649/Park-Hyatt-New-York-Manhattan-Sky-Suite-Master-Bedroom-low-res_54_990x660.jpg"} alt="Room"></Grid>
+                <Grid items size={{lg:6.5}} sx={{width:"100%",height:"100%"}}>
+                  <Typography variant="h6" sx={{fontWeight:"500"}}>{guestHouse}</Typography>
+                  <Typography variant="body2" color="text.secondary" mb={2}>
+                    {item ? item.location : "No Guest House Found"}
+                  </Typography>
+                  <Grid container sx={{width:"50%",height:"50px",display:"flex",justifyContent:'space-between',position:"relative"}}>
+                    <Grid items size={{lg:5}} sx={{width:'100%',height:"100%"}}>
+                      <Typography sx={{color:"green"}}>Check In</Typography>
+                      <Typography>{checkIn||"Not Selected"}</Typography>
+                    </Grid>
+                    <Grid items size={{lg:5}} sx={{width:'100%',height:"100%"}}>
+                      <Typography sx={{color:"red"}}>Check Out</Typography>
+                      <Typography>{checkOut||"Not Selected"}</Typography>
+                    </Grid>
+                    <Box sx={{height:"48px",width:"1px", bgcolor:"grey",position:"absolute",left:"130px"}}></Box>
+                  </Grid>
+                  <Grid sx={{width:"280px",height:"50px",bgcolor:"#FFE602",borderRadius:"10px",marginTop:"10px",display:"flex",justifyContent:"center",alignItems:"center"}}>
+                    <Typography>Current Status:Waiting for Approval</Typography>
+                  </Grid>
+                </Grid>
+                <Grid items size={{lg:2}} sx={{width:"100%",height:"100%"}}>
+                  <Box sx={{width:"100%",height:"30%"}}></Box>
+                    <Box sx={{width:"100%",height:"50%"}}>
+                      <Grid sx={{width:"70%",height:"40px",display:'flex',justifyContent:"flex-end",alignItems:"center",color:"grey",}}>
+                        <Typography sx={{fontSize:"12px"}}>Selected Room Type</Typography>
+                      </Grid>
+                      <Grid sx={{width:"100%",height:"40px",display:'flex',justifyContent:"flex-start",alignItems:"center"}}>
+                        <Typography sx={{fontSize:"14px"}}>{room || "Room not Selected"} Room / {noOfGuest ||0} Guest</Typography>
+                      </Grid>
+                      <Grid sx={{width:"100%",height:"40px",display:'flex',justifyContent:"flex-start",alignItems:"center"}}>
+                        <Typography sx={{color:"#0081FF",fontWeight:"600"}}>Total Tariff : 2000/-</Typography>
+                      </Grid>
+                    </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+    
+  );
+};
+
+
