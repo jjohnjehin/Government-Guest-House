@@ -361,7 +361,7 @@ console.log("guest.Status values:", guests.map(g => g.Status));
                                 <Grid sx={{ width: '8%', display: 'flex', alignItems: 'center'}}>
                                     <Grid sx={{width:'65%',height:"100%",display:'flex',justifyContent:"space-between"}}>
                                         <Typography variant="h5" >₹</Typography>
-                                        <Typography variant="h5">
+                                        <Typography variant="h5" >
                                             {guest.Tariff?.toString().length > 3
                                                 ? guest.Tariff.toString().slice(0, 1) + ',' + guest.Tariff.toString().slice(1)
                                                 : guest.Tariff}
