@@ -69,7 +69,7 @@ export const Home = () => {
 
       <Box sx={{ position: 'relative', zIndex: 1, height: '100%',backgroundColor: 'rgba(0, 0, 0, 0.4)' }}>
         <Grid container sx={{ height: '100%'}}>
-         
+             
           <Grid size={{lg:12}} >
             <Grid container sx={{height:"597px",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",mt:17}}>
               <Grid size={{lg:10}} sx={{height:"200px",textAlign:"center"}}>
@@ -191,8 +191,8 @@ export const Home = () => {
           </Grid>
         </Grid>
       </Box>
-      <Gallary />
-      <Location />
+      <Gallary/>
+      <Location/>
       <Footer/>
     </Box>
   );
