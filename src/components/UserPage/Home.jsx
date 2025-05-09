@@ -10,6 +10,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Gallary } from './Gallary';
 import { Location } from './Location';
 import { Footer } from './Footer';
+import { BookingDetails } from './BookingDetails';
 
 
 
@@ -46,8 +47,6 @@ export const Home = () => {
   
   return (
     <Box sx={{ position: 'relative', width: '100%', height: '698px' ,  marginTop:"-114px"}}>
-      
-    
       <Box
         id='home'
         sx={{

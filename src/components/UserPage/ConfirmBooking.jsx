@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography, Grid,Link, } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import data from "../db.json"
+import { useNavigate } from 'react-router-dom';
 // import design from '/public/assets/Images/headerbackblue.png'
 // import logo from "./image 1 (1).png"
 import { useState,useEffect } from "react";
@@ -16,113 +17,52 @@ export const ConfirmBooking = () => {
     (item) => item.name && item.name.toLowerCase() === guestHouse.toLowerCase()
   );
   
-  console.log("Matched Item:", item);
-  // HEADER
-  // const location = useLocation();
-    const isBookingDetailsPage = location.pathname === "/BookingDetails";
-  
-       const [timeLeft, setTimeLeft] = useState(0); // Timer in seconds
-        const [otpSent, setOtpSent] = useState(false);
-        const [otp, setOtp] = useState('')
-      
-        
-        useEffect(() => {
-          let timer;
-          if (timeLeft > 0) {
-            timer = setInterval(() => {
-              setTimeLeft(prev => prev - 1);
-            }, 1000);
-          }
-      
-          return () => clearInterval(timer);
-        }, [timeLeft])
-      
-        const handleSendOtp = () => {
-          setOtpSent(true);
-          setTimeLeft(120); // 2 minutes
-          // Here you can trigger actual OTP send logic
-          console.log("OTP sent!");
-        };
-      
-        const formatTime = (seconds) => {
-          const min = String(Math.floor(seconds / 60)).padStart(2, '0');
-          const sec = String(seconds % 60).padStart(2, '0');
-          return `${min}:${sec}`;
-        };
+  // console.log("Matched Item:", item);
+  const navigate=useNavigate()
+  const[active,setActive]=useState("Home")
+  const handleNavigation = (index, path) => {
+    setActive(index);
+    navigate(path);
+  };
       
       
-        const items=[
-          {name:"Home",id:"home"},
-          {name:'Gallery',id:"gallery"},
-          {name:"Location",id:"location"}
-        ]
-      
-         const [manageopen,setManageopen]=useState(false)
-          const [activePage, setActivePage] = useState("home");
-         
-         
-          
-    const handlenav = (id) => {
-      setActivePage(id);
-  
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }
+       
   return (
     <Box sx={{height:"100%",width:'100%'}}>
       {/* HEADER */}
-      <Grid container sx={{width:"100%",height:'100px'}}>
-            <Grid size={{lg:12}} sx={{height:"111px",display: 'flex',alignItems:"center",justifyContent:"space-between"}}>
-                                    <Typography sx={{color:"black"}} variant='h5' color='white' ml={5}>Kanniyakumari<span style={{fontSize:"15px",color:"black"}}>.in</span></Typography>
-                                    <Box
-                                      sx={{
-                                        height: '170px',
-                                        width: '46%',
-                                        backgroundImage: `url(${process.env.PUBLIC_URL}/assets/Images/headerbackblue.png)`,
-                                        backgroundPosition:"center",
-                                        backgroundSize:"contain",
-                                        backgroundRepeat:"no-repeat",
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-evenly',
-                                        marginTop:"-36px",
-                                        alt:"not found"
-                                        
-                                      }}
-                                    >
-                                   <img src="/assets/Images/image 1 (1).png" alt="not found" style={{height:"60px",width:"60px",objectFit:"contain",marginLeft:"20px"}}/>
-                                   <Grid >
-                                   {items.map((item)=>(
-                                         <Link component="button"  onClick={()=>handlenav(item.id)} underline='none' sx={{color:"white",fontSize:"15px",
-                                          // textDecoration: item.id === activePage ? 'underline' : 'none',
-                                          // textDecorationColor: item.id === activePage ? 'blue' : 'transparent',
-                                          // textDecorationThickness: item.id === activePage ? '5px' : undefined,
-                                          // textUnderlineOffset: item.id === activePage ? '10px' : undefined,
-                                          '&:hover': {textDecoration: 'underline'
-                                            ,textDecorationColor: 'blue',  
-                                            textDecorationThickness:"5px",
-                                            textUnderlineOffset: '10px',
-                                     },mx:4}}>{item.name}</Link>
-                                   ))}
-                                   </Grid>
-                                  
-                                   
-                                    </Box>
-                                   
-                                   <Link component="button" underline='none'  onClick={()=>setManageopen(true)} >
-                                   <Box  sx={{ backgroundImage:"url(/button.png)",height:"60px",backgroundSize:"contain",mx:5,backgroundRepeat:"no-repeat",color:"white",display:"flex",alignItems:"center",justifyContent:"center",textAlign:"center",marginTop:"-13px",cursor:"pointer"}}>
-                                      <Typography variant='h6' sx={{mx:2,fontWeight: 600}}></Typography>
-                                      
-                                   </Box>
-                                   </Link>
-                                   
-                        </Grid>
-        </Grid>
+      <Grid sx={{width:"100%",height:"100px",display:"flex",justifyContent:"center"}}>
+              <Grid sx={{width:"300px",height:"70px",position:"absolute",left:"40px",top:"20px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/kklogo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid>
+              <Grid sx={{width:"45%",height:"80px",backgroundImage: `url(${process.env.PUBLIC_URL}/assets/Images/headerbackblue.png)`,backgroundPosition:"top",backgroundSize:"contain",backgroundRepeat:"no-repeat",backgroundSize: "100% 100%",display:"flex",alignItems:"center"}}>
+              {/* GOV LOGO */}
+                <Grid sx={{width:"80px",height:'65px',marginLeft:"100px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/Gov_Logo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid>
+                <Grid sx={{width:"380px",height:"50px",marginLeft:"10px",display:"flex",justifyContent:"space-evenly",alignItems:"center"}}>
+                  {
+                    [
+                      { name: "Home", path: "/" },
+                      { name: "Gallery", path: "/Gallary" },
+                      { name: "Location", path: "/Location" }
+                    ].map((item, index) => (
+                      <Grid 
+                        key={index}
+                        sx={{
+                          fontSize: "18px",
+                          color: "white",
+                          fontWeight: active === index ? "600" : "400", 
+                          cursor: "pointer",
+                          borderBottom:active===index?"1px solid blue":null
+                        }} 
+                        onClick={() => handleNavigation(index, item.path)}
+                      >
+                        {item.name}
+                      </Grid>
+                    ))
+                  }
+                </Grid>
+              </Grid>
+            </Grid>
       {/* BODY */}
         <Box sx={{width:"100%",height:"370px",display:'flex',justifyContent:'center',alignItems:"center"}}>
-        <Box sx={{width:"80%",height:"300px",borderRadius:"5px",overflow:"hidden",display:"flex",justifyContent:"center",boxShadow:"2"}}>
+        <Box sx={{width:"94%",height:"300px",borderRadius:"5px",overflow:"hidden",display:"flex",justifyContent:"center",boxShadow:"2"}}>
           <Box sx={{width:"95%",height:"100%"}}>
             <Box sx={{width:"100%",height:"80px",display:'flex',flexDirection:"column",justifyContent:"center"}}>
               <Typography variant="h5">Your Booking</Typography>

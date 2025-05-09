@@ -13,7 +13,7 @@
             "Room_Type": "Suite Room",
             "Location": "Nagercoil",
             "Tariff": 500,
-            "Remarks": "Prefers a room on the ground",
+            "Remarks": "Prefers a room on the ground and needs a nature view",
             "Status":"Pending"
         },
         {
@@ -160,6 +160,21 @@
             "Remarks": "Allergy to dust, keep room clean",
             "Status":"Cancelled"
         }
+    ],
+    "allData":[
+        { "date": "2025-05-13","day": "Friday", "Location": "Nagercoil","suite_room": 3, "delux_room": 5 },
+        { "date": "2025-05-15","day": "Sunday", "Location": "Nagercoil","suite_room": 3, "delux_room": 5 },
+        { "date": "2025-03-19","day": "Thursday", "Location": "Nagercoil","suite_room": 3, "delux_room": 5 },
+        { "date": "2025-05-21","day": "Friday", "Location": "Nagercoil","suite_room": 3, "delux_room": 5 },
+        { "date": "2025-05-29","day": "Friday", "Location": "Nagercoil","suite_room": 3, "delux_room": 5 },
+        { "date": "2025-05-25","day": "Monday", "Location": "Kanyakumari","suite_room": 2, "delux_room": 4 },
+        { "date": "2025-05-28","day": "Wednesday", "Location": "Kanyakumari","suite_room": 5, "delux_room": 3 },
+        { "date": "2025-05-28","day": "Sunday", "Location": "Kanyakumari","suite_room": 5, "delux_room": 3 },
+        { "date": "2025-05-15","day": "Monday", "Location": "Nagercoil","suite_room": 2, "delux_room": 4 },
+        { "date": "2025-01-09","day": "Friday", "Location": "Nagercoil","suite_room": 3, "delux_room": 5 },
+        { "date": "2025-01-22","day": "Thursday", "Location": "Kanyakumari","suite_room": 4, "delux_room": 2 },
+        { "date": "2025-02-03","day": "Tuesday", "Location": "Nagercoil","suite_room": 1, "delux_room": 6 },
+        { "date": "2025-03-17","day": "Sunday", "Location": "Kanyakumari","suite_room": 3, "delux_room": 4 }
     ]
     
 }

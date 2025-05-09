@@ -14,14 +14,18 @@ import {
   } from '@mui/material';
   import data from "../db.json"
   import { Footer } from '../Footer';
+  import { useContext } from 'react';
+  import { BookingContext } from "./BookingContext"; // Adjust path
+  
   
 
 export const BookingDetails = () => {
+  // const [active, setActive] = useState("Home");
   
     const [guestHouse, setGuestHouse] = useState("Not Selected");
     const [checkIn,setCheckIn]=useState("")
     const [checkOut,setCheckOut]=useState("")
-    const [room,setRoom]=useState("Not Selected")
+    // const [room,setRoom]=useState("Not Selected")
     const [noOfRoom,setNoOfRoom]=useState(1)
     const [noOfGuest,setNoOfGuest]=useState(1)
     const [designation,setDesignation]=useState("")
@@ -59,77 +63,54 @@ export const BookingDetails = () => {
     setNoOfGuest(event.target.value);
     console.log("Selected room:", event.target.value);
   };
-
-
-
-    
-      
-    
-    
-      const items=[
-        {name:"Home",id:"home"},
-        {name:'Gallery',id:"gallery"},
-        {name:"Location",id:"location"}
-      ]
-    
-       const [manageopen,setManageopen]=useState(false)
-        const [activePage, setActivePage] = useState("home");
-       
-       
-        
-  const handlenav = (id) => {
-    setActivePage(id);
-
-  const section = document.getElementById(id);
-  if (section) {
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-}
+  // const navigate=useNavigate()
+    const[active,setActive]=useState("Home")
+    const handleNavigation = (index, path) => {
+      setActive(index);
+      navigate(path);
+    };
+// DATA FROM HOME PAGE
+const {
+  checkindate,
+  checkoutdate,
+  guest,
+  room,
+  setGuest,
+  setRoom
+} = useContext(BookingContext);
+console.log("CHECKKKKKK:",checkindate)
   return (
     <Box sx={{width:'100%',height:'100%'}}>
       {/* HEADER */}
-      <Grid container sx={{width:"100%",height:'100px'}}>
-            <Grid size={{lg:12}} sx={{height:"100px",display: 'flex',alignItems:"center",justifyContent:"space-between"}}>
-                                    <Typography sx={{color:"black"}} variant='h5' color='white' ml={5}>Kanniyakumari<span style={{fontSize:"15px",color:"black"}}>.in</span></Typography>
-                                    <Box
-                                      sx={{
-                                        height: '170px',
-                                        width: '46%',
-                                        backgroundImage: `url(${process.env.PUBLIC_URL}/assets/Images/headerbackblue.png)`,
-                                        backgroundPosition:"center",
-                                        backgroundSize:"contain",
-                                        backgroundRepeat:"no-repeat",
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-evenly',
-                                        marginTop:"-36px",
-                                        alt:"not found"
-                                        
-                                      }}
-                                    >
-                                   <img src="/assets/Images/image 1 (1).png" alt="not found" style={{height:"60px",width:"60px",objectFit:"contain",marginLeft:"20px"}}/>
-                                   <Grid >
-                                   {items.map((item)=>(
-                                         <Link component="button"  onClick={()=>handlenav(item.id)} underline='none' sx={{color:"white",fontSize:"15px",
-                                          '&:hover': {textDecoration: 'underline'
-                                            ,textDecorationColor: 'blue',  
-                                            textDecorationThickness:"5px",
-                                            textUnderlineOffset: '10px',
-                                     },mx:4}}>{item.name}</Link>
-                                   ))}
-                                   </Grid>
-                                  
-                                   
-                                    </Box>
-                                   
-                                   <Link component="button" underline='none'  onClick={()=>setManageopen(true)} >
-                                   <Box  sx={{ backgroundImage:"url(/button.png)",height:"60px",backgroundSize:"contain",mx:5,backgroundRepeat:"no-repeat",color:"white",display:"flex",alignItems:"center",justifyContent:"center",textAlign:"center",marginTop:"-13px",cursor:"pointer"}}>
-                                      <Typography variant='h6' sx={{mx:2,fontWeight: 600}}></Typography>
-                                      
-                                   </Box>
-                                   </Link>
-                                   
-            </Grid>
+      <Grid sx={{width:"100%",height:"100px",display:"flex",justifyContent:"center"}}>
+        <Grid sx={{width:"300px",height:"70px",position:"absolute",left:"40px",top:"20px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/kklogo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid>
+        <Grid sx={{width:"45%",height:"80px",backgroundImage: `url(${process.env.PUBLIC_URL}/assets/Images/headerbackblue.png)`,backgroundPosition:"top",backgroundSize:"contain",backgroundRepeat:"no-repeat",backgroundSize: "100% 100%",display:"flex",alignItems:"center"}}>
+        {/* GOV LOGO */}
+          <Grid sx={{width:"80px",height:'65px',marginLeft:"100px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/Gov_Logo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid>
+          <Grid sx={{width:"380px",height:"50px",marginLeft:"10px",display:"flex",justifyContent:"space-evenly",alignItems:"center"}}>
+            {
+              [
+                { name: "Home", path: "/" },
+                { name: "Gallery", path: "/Gallary" },
+                { name: "Location", path: "/Location" }
+              ].map((item, index) => (
+                <Grid 
+                  key={index}
+                  sx={{
+                    fontSize: "18px",
+                    color: "white",
+                    fontWeight: active === index ? "600" : "400", 
+                    cursor: "pointer",
+                    borderBottom:active===index?"1px solid blue":null
+                  }} 
+                  onClick={() => handleNavigation(index, item.path)}
+                >
+                  {item.name}
+                </Grid>
+              ))
+            }
+          </Grid>
+        </Grid>
       </Grid>
       {/* BODY */}
       {/* PARENT CONTAINER */}
@@ -138,7 +119,7 @@ export const BookingDetails = () => {
               <Box sx={{width:"95%",height:'100%'}}>
                 <Grid container sx={{width:"100%",height:"100%",display:'flex',justifyContent:'space-between'}}>
                   {/* LEFT CONTAINER */}
-                  <Grid item size={{lg:8.8}} sx={{width:"100%",height:"100%",bgcolor:"#F2F2F3",display:"flex",justifyContent:"center"}}>
+                  <Grid item size={{lg:8.8}} sx={{width:"100%",height:"100%",bgcolor:"#F2F2F3",display:"flex",justifyContent:"center",borderRadius:"4px"}}>
                     {/* HIDDEN CONTAINER */}
                     <Grid sx={{width:"95%",height:"95%"}}>
                       {/* BOOK YOUR STAY CONTAINEER */}
@@ -343,22 +324,22 @@ export const BookingDetails = () => {
                                         <Typography variant="subtitle1" fontWeight="bold">{guestHouse}</Typography>
                                         <Typography variant="body2" color="text.secondary" mb={2}>{item ? item.location : "No Guest House Found"}</Typography>
                                     <Divider sx={{ mb: 2 }} />
-                                    <Grid container sx={{display:'flex',justifyContent:'space-between',position:"relative",height:"100%",width:"80%"}}>
+                                    <Grid container sx={{display:'flex',justifyContent:'space-between',position:"relative",height:"100%",width:"90%"}}>
                                       {/* VDERTICAL LINE */}
                                       <Box sx={{width:"1px",height:"100%",bgcolor:'grey',position:"absolute",left:"120px",top:"0px"}}></Box>
                                         <Grid item size={{lg:5}}  sx={{width:"100%",height:"100%"}}>
                                             <Typography variant="body2" color="green" fontWeight="bold">Check-in</Typography>
-                                            <Typography fontWeight="500" variant="body1">{checkIn||"Not Selected"}</Typography>
+                                            <Typography fontWeight="500" variant="body1">{checkindate||"Not Selected"}</Typography>
                                         </Grid>
                                         <Grid item size={{lg:5}} sx={{width:"100%",height:"100%"}} >
                                             <Typography variant="body2" color="red" fontWeight="bold">Check-out</Typography>
-                                            <Typography fontWeight="500" variant="body1">{checkOut||"Not selected"}</Typography>
+                                            <Typography fontWeight="500" variant="body1">{checkoutdate||"Not selected"}</Typography>
                                         </Grid>
                                     </Grid>
                                     <Divider sx={{ my: 2 }} />
                                     <Typography variant="body2" color="text.secondary">Selected Room Type</Typography>
-                                    <Typography fontWeight="bold" variant="body1">{room}</Typography>
-                                    <Typography variant="body2" color="text.secondary">{noOfRoom} Room , {noOfGuest} Guest</Typography>
+                                    <Typography fontWeight="bold" variant="body1">{room||"Not selected"}</Typography>
+                                    <Typography variant="body2" color="text.secondary">{noOfRoom||0} Room , {noOfGuest||0} Guest</Typography>
                                 </CardContent>
                                 </Card>
                     </Box>
