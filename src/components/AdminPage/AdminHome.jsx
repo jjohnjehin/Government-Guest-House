@@ -82,6 +82,14 @@ export const AdminHome=()=>{
         navigate(path);
       };
   const navigate=useNavigate()
+  const formatDate = (dateStr) => {
+  const date = new Date(dateStr);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = date.toLocaleString('en-US', { month: 'short' });
+  const year = String(date.getFullYear()).slice(-2);
+  return `${day} ${month} ${year}`;
+};
+
     return(
         <Box sx={{width:"100%",height:"100%",display:'flex',flexDirection:'column',alignItems:"center"}}>
             {/* HEADER */}
@@ -89,26 +97,31 @@ export const AdminHome=()=>{
                     {/* <Grid sx={{width:"300px",height:"70px",position:"absolute",left:"40px",top:"20px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/kklogo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid> */}
                     <Grid sx={{width:"45%",height:"80px",backgroundImage: `url(${process.env.PUBLIC_URL}/assets/Images/headerbackblue.png)`,backgroundPosition:"top",backgroundSize:"contain",backgroundRepeat:"no-repeat",backgroundSize: "100% 100%",display:"flex",alignItems:"center"}}>
                     {/* GOV LOGO */}
-                      <Grid sx={{width:"80px",height:'65px',marginLeft:"100px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/Gov_Logo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid>
+                      <Grid sx={{width:"80px",height:'65px',marginLeft:"100px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/Gov_Logo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}
+                            onClick={() => {
+  console.log("Grid clicked");
+  navigate('/');
+}}></Grid>
                       <Grid sx={{width:"380px",height:"50px",marginLeft:"10px",display:"flex",justifyContent:"space-evenly",alignItems:"center"}}>
                         {
                           [
-                            { name: "Assign", path: "/Assignroom" },
-                            { name: "SearchBooking", path: "/SearchBooking" },
-                            { name: "AvailabilityChart", path: "/AvailabilityChart" }
+                            { name: "Assign", path: "/" },
+                            { name: "Search Booking", path: "/SearchBooking" },
+                            { name: "Availability Chart", path: "/AvailabilityChart" }
                           ].map((item, index) => (
-                            <Grid 
-                              key={index}
-                              sx={{
-                                fontSize: "18px",
-                                color: "white",
-                                fontWeight: active === index ? "700" : "400", 
-                                cursor: "pointer",
-                                borderBottom:active===index?"1px solid blue":null
-                              }} 
-                              onClick={() => handleNavigation(index, item.path)}
-                            >
-                              {item.name}
+                            <Grid
+                                key={index}
+                                sx={{
+                                    fontSize: "18px",
+                                    color: "white",
+                                    fontWeight: item.name === "Assign" ? "600" : "400",
+                                    cursor: "pointer",
+                                    borderBottom: item.name === "Assign" ? "3px solid white" : "none",
+                                    pb: "4px"
+                                }}
+                                onClick={() => handleNavigation(index, item.path)}
+                                >
+                                {item.name}
                             </Grid>
                           ))
                         }
@@ -124,14 +137,14 @@ export const AdminHome=()=>{
                             {/* LEFT */}
                             <Grid item size={{lg:5.5}} sx={{width:"100%",height:"100%",display:"flex",alignItems:"center"}}>
                                 <Grid sx={{width:'100%',height:"100px",display:'flex',alignItems:"center"}}>
-                                    <img src="assets/Images/Govt Image.png" style={{width:"80%"}}></img>
+                                    <img src="assets/Images/tamilnaduogo2.png" style={{width:"80%"}}></img>
                                 </Grid>
                             </Grid>
                             {/* RIGHT */}
                             <Grid item size={{lg:6.5}} sx={{width:"100%",height:"100%",bgcolor:"white",boxShadow:"2",borderRadius:'5px',display:'flex',justifyContent:"center",alignItems:'center'}}>
                                 <Grid sx={{width:"95%",height:"85%",display:'flex',flexDirection:'column',justifyContent:"space-between"}}>
                                     <Grid sx={{width:"100%",height:"33px",display:'flex',justifyContent:'center',alignItems:'center'}}>
-                                        <Typography sx={{fontWeight:"700"}}>Current Room Availability</Typography>
+                                        <Typography sx={{fontWeight:"700",paddingBottom:"10px"}}>Current Room Availability</Typography>
                                     </Grid>
                                     {/* ROOM AVAILABILITY CONTAINER */}
                                     <Grid container sx={{width:'100%',height:"70%"}}>
@@ -198,8 +211,8 @@ export const AdminHome=()=>{
                         {/* BOTTOM */}
                         <Grid  sx={{width:"100%",height:'66%',bgcolor:"white",boxShadow:"3",marginTop:'20px',marginBottom:"20px"}}>
                             {/* FILTER TABLE */}
-                            <Grid sx={{ width: "35%", height: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                <Grid sx={{ width: '95%', height: "80%", display: 'flex', justifyContent: "space-around" }}>
+                            <Grid sx={{ width: "37%", height: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <Grid sx={{ width: '97%', height: "80%", display: 'flex', justifyContent: "space-around" }}>
                                     {[
                             // {
                             //     label: "All",
@@ -208,13 +221,13 @@ export const AdminHome=()=>{
                             //     isActive: true,
                             // },
                             {
-                                label: "Pending",
+                                label: "Assigned",
                                 count: 10,
                                 icon: <PanoramaFishEyeIcon />,
-                                isActive: true, // set true if active
+                                isActive: true, 
                             },
                             {
-                                label: "Assigned",
+                                label: "Pending",
                                 count: 14,
                                 icon: <PanoramaFishEyeIcon />,
                                 isActive: true,
@@ -232,7 +245,7 @@ export const AdminHome=()=>{
                                             setActiveTab(item.label);
                                             // console.log("active numbers:",activeTab.length);
                                             console.log("activeTab:", item.label);
-console.log("guest.Status values:", guests.map(g => g.Status));
+                                            console.log("guest.Status values:", guests.map(g => g.Status));
 
                                         }}// ← set active on click
                                         sx={{
@@ -256,7 +269,7 @@ console.log("guest.Status values:", guests.map(g => g.Status));
                                             color: activeTab === item.label ? "#1976d2" : "grey"
                                         }}
                                         >
-                                        {item.label}({statusCounts[item.label] || 0})
+                                        {item.label} ({statusCounts[item.label] || 0})
                                         </Typography>
                                     </Grid>
                                     ))}
@@ -329,14 +342,19 @@ console.log("guest.Status values:", guests.map(g => g.Status));
                                     <Typography sx={{ color: 'grey', fontSize: '13px' }}>{guest['guest type']}</Typography>
                                 </Grid>
                                 <Grid sx={{ width: '13%', display: 'flex' }}>
-                                    <Grid sx={{ width: '52%', display: 'flex', flexDirection: 'column', justifyContent: 'center',}}>
-                                    <Typography sx={{ color: 'green',fontSize:"0.875rem" }}>{guest.checkin}</Typography>
-                                    <Typography sx={{ color: 'red',fontSize:"0.875rem" }}>{guest.checkout}</Typography>
+                                    <Grid sx={{ width: '52%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                        <Typography sx={{ color: 'green', fontSize: "0.875rem" }}>
+                                            {formatDate(guest.checkin)}
+                                        </Typography>
+                                        <Typography sx={{ color: 'red', fontSize: "0.875rem" }}>
+                                            {formatDate(guest.checkout)}
+                                        </Typography>
                                     </Grid>
+
                                     <Grid sx={{ width: '20%', display: 'flex', alignItems: 'center' }}>
-                                    <Grid
+                                        <Grid
                                         sx={{
-                                        width: '93%',
+                                        width: '90%',
                                         height: '72%',
                                         bgcolor: 'white',
                                         borderRadius: '5px',
@@ -344,10 +362,9 @@ console.log("guest.Status values:", guests.map(g => g.Status));
                                         display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        }}
-                                    >
+                                        }}>
                                         <Typography variant="h5" sx={{fontSize:"21px"}} >{getStayDuration(guest.checkin, guest.checkout)}d</Typography>
-                                    </Grid>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                                 <Grid sx={{ width: '17%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -382,7 +399,7 @@ console.log("guest.Status values:", guests.map(g => g.Status));
                                         sx={{
                                             paddingTop:'5px',
                                         color: 'grey',
-                                        fontSize: "0.875rem",
+                                        fontSize: "0.860rem",
                                         whiteSpace: 'pre-line', // Enables line breaks
                                         '&:hover': guest.Remarks?.split(" ").length > 7 ? {
                                             cursor: 'pointer'
@@ -403,7 +420,7 @@ console.log("guest.Status values:", guests.map(g => g.Status));
                                     <Grid sx={{width:activeTab==="Pending"?"80%":"50%",height:"30px",bgcolor:"#90E0EF",border:'1px solid #0077B6',borderRadius:"5px",display:'flex',justifyContent:"center",alignItems:'center'}}>
                                         <Typography sx={{fontSize:"12px",cursor:"pointer"}} onClick={() => {
                                                 if (activeTab === "Pending") {
-                                                navigate('/review-request'); 
+                                                navigate('/Assignroom'); 
                                                 } else {
                                                 navigate('/update');
                                                 }

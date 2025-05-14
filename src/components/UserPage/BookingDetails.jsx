@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, } from 'react';
+import { useNavigate,useLocation } from 'react-router-dom';
 import {
     TextField,
     Typography,
@@ -29,6 +29,7 @@ export const BookingDetails = () => {
     const [noOfRoom,setNoOfRoom]=useState(1)
     const [noOfGuest,setNoOfGuest]=useState(1)
     const [designation,setDesignation]=useState("")
+    const [roomType,setRoomType]=useState("")
     const navigate=useNavigate()
     console.log("checkindate:",checkIn)
     const item = data.find(
@@ -52,7 +53,7 @@ export const BookingDetails = () => {
     console.log("Selected date:", event.target.value);
   };
   const handleChangeRoomType= (event) => {
-    setRoom(event.target.value);
+    setRoomType(event.target.value);
     console.log("Selected room:", event.target.value);
   };
   const handleChangeNoOfRoom= (event) => {
@@ -70,48 +71,55 @@ export const BookingDetails = () => {
       navigate(path);
     };
 // DATA FROM HOME PAGE
-const {
-  checkindate,
-  checkoutdate,
-  guest,
-  room,
-  setGuest,
-  setRoom
-} = useContext(BookingContext);
-console.log("CHECKKKKKK:",checkindate)
+const location = useLocation();
+  const { checkindate,checkoutdate,guest,room } = location.state || {};
+// const {
+//   checkindate,
+//   checkoutdate,
+//   guest,
+//   room,
+//   setGuest,
+//   setRoom
+// } = useContext(BookingContext);
+// console.log("CHECKKKKKK:",checkindate)
   return (
     <Box sx={{width:'100%',height:'100%'}}>
       {/* HEADER */}
       <Grid sx={{width:"100%",height:"100px",display:"flex",justifyContent:"center"}}>
-        <Grid sx={{width:"300px",height:"70px",position:"absolute",left:"40px",top:"20px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/kklogo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid>
-        <Grid sx={{width:"45%",height:"80px",backgroundImage: `url(${process.env.PUBLIC_URL}/assets/Images/headerbackblue.png)`,backgroundPosition:"top",backgroundSize:"contain",backgroundRepeat:"no-repeat",backgroundSize: "100% 100%",display:"flex",alignItems:"center"}}>
-        {/* GOV LOGO */}
-          <Grid sx={{width:"80px",height:'65px',marginLeft:"100px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/Gov_Logo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid>
-          <Grid sx={{width:"380px",height:"50px",marginLeft:"10px",display:"flex",justifyContent:"space-evenly",alignItems:"center"}}>
-            {
-              [
-                { name: "Home", path: "/" },
-                { name: "Gallery", path: "/Gallary" },
-                { name: "Location", path: "/Location" }
-              ].map((item, index) => (
-                <Grid 
-                  key={index}
-                  sx={{
-                    fontSize: "18px",
-                    color: "white",
-                    fontWeight: active === index ? "600" : "400", 
-                    cursor: "pointer",
-                    borderBottom:active===index?"1px solid blue":null
-                  }} 
-                  onClick={() => handleNavigation(index, item.path)}
-                >
-                  {item.name}
-                </Grid>
-              ))
-            }
-          </Grid>
-        </Grid>
-      </Grid>
+                          {/* <Grid sx={{width:"300px",height:"70px",position:"absolute",left:"40px",top:"20px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/kklogo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid> */}
+                          <Grid sx={{width:"45%",height:"80px",backgroundImage: `url(${process.env.PUBLIC_URL}/assets/Images/headerbackblue.png)`,backgroundPosition:"top",backgroundSize:"contain",backgroundRepeat:"no-repeat",backgroundSize: "100% 100%",display:"flex",alignItems:"center"}}>
+                          {/* GOV LOGO */}
+                            <Grid sx={{width:"80px",height:'65px',marginLeft:"100px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/Gov_Logo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}
+                                  onClick={() => {
+        console.log("Grid clicked");
+        navigate('/');
+      }}></Grid>
+                            <Grid sx={{width:"380px",height:"50px",marginLeft:"10px",display:"flex",justifyContent:"space-evenly",alignItems:"center"}}>
+                              {
+                                [
+                                  { name: "Assign", path: "/" },
+                                  { name: "SearchBooking", path: "/SearchBooking" },
+                                  { name: "AvailabilityChart", path: "/AvailabilityChart" }
+                                ].map((item, index) => (
+                                  <Grid
+                                      key={index}
+                                      sx={{
+                                          fontSize: "18px",
+                                          color: "white",
+                                          fontWeight: item.name === "Assign" ? "600" : "400",
+                                          cursor: "pointer",
+                                          borderBottom: item.name === "Assign" ? "3px solid white" : "none",
+                                          pb: "4px"
+                                      }}
+                                      onClick={() => handleNavigation(index, item.path)}
+                                      >
+                                      {item.name}
+                                  </Grid>
+                                ))
+                              }
+                            </Grid>
+                          </Grid>
+                        </Grid>
       {/* BODY */}
       {/* PARENT CONTAINER */}
             <Box sx={{width:"100%",height:"790px",display:"flex",justifyContent:'center',marginTop:"30px"}}>
@@ -134,16 +142,16 @@ console.log("CHECKKKKKK:",checkindate)
                       <Box sx={{width:'100%',height:"140px",marginTop:"10px",display:'flex',flexDirection:"column",justifyContent:'space-between'}}>
                         {/* ROW ONE */}
                         <Grid container sx={{width:"100%",height:'40px',display:'flex',justifyContent:'space-between'}}>
-                          <Grid item size={{lg:2.7}} sx={{ height: "100%"}}>
-                            <TextField size="small" fullWidth label={
+                          <Grid item size={{lg:2.7}} sx={{ height: "100%",width:'100%',border:"1px"}}>
+                            {/* <TextField size="small" fullWidth label={
                                 <span>
                                   Check-In Date <span style={{ color: 'red' }}>*</span>
                                 </span>
                               }
                               type="date"
                               InputLabelProps={{ shrink: true }}
-                              value={checkIn}
-                              onChange={handleChangeCheckInDate}/>
+                              value={checkindate}
+                              onChange={handleChangeCheckInDate}/> */}
                           </Grid>
                           <Grid item size={{lg:2.7}} sx={{width:"100%",height: "100%"}}>
                             <TextField fullWidth label={

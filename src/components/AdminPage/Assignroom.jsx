@@ -32,14 +32,15 @@ export const Assignroom = () => {
             navigate(path);
           };
       const navigate=useNavigate()
+      
   return (
     <Box>
       {/* HEADER */}
       <Grid sx={{width:"100%",height:"100px",display:"flex",justifyContent:"center"}}>
-                                  <Grid sx={{width:"300px",height:"70px",position:"absolute",left:"40px",top:"20px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/kklogo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid>
+                                  <Grid sx={{width:"300px",height:"70px",position:"absolute",left:"40px",top:"20px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/tamilnaduogo2.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid>
                                   <Grid sx={{width:"45%",height:"80px",backgroundImage: `url(${process.env.PUBLIC_URL}/assets/Images/headerbackblue.png)`,backgroundPosition:"top",backgroundSize:"contain",backgroundRepeat:"no-repeat",backgroundSize: "100% 100%",display:"flex",alignItems:"center"}}>
                                   {/* GOV LOGO */}
-                                    <Grid sx={{width:"80px",height:'65px',marginLeft:"100px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/Gov_Logo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid>
+                                    <Grid sx={{width:"80px",height:'65px',marginLeft:"100px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/Gov_Logo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}} onClick={()=>navigate('/')}></Grid>
                                     <Grid sx={{width:"380px",height:"50px",marginLeft:"10px",display:"flex",justifyContent:"space-evenly",alignItems:"center"}}>
                                       {
                                         [
@@ -262,7 +263,7 @@ export const Assignroom = () => {
                                         <Grid size={4}>
                                             <Typography color="#B0B0B0">Tariff</Typography>
                                             <Box mt={0.5}>
-                                                <Typography variant='h6'><span style={{color:"#B0B0B0",fontSize:"15px"}}>₹</span>2,000</Typography>
+                                                <Typography variant='h6'><span style={{color:"#B0B0B0",fontSize:"15px"}}>₹ </span>2,000</Typography>
 
                                             </Box>
                                             </Grid>

@@ -6,13 +6,14 @@ import { ConfirmBooking } from "./components/UserPage/ConfirmBooking"
 import {Footer} from "./components/Footer"
 import { AdminHome } from './components/AdminPage/AdminHome';
 import { Header } from './components/UserPage/Header';
-// import { Home } from './components/UserPage/Home';
+import { Home } from './components/UserPage/Home';
 import { AvailabilityChart } from './components/AdminPage/AvailabilityChart';
 import { BookingProvider } from './components/UserPage/BookingContext';
 import { Gallary } from './components/UserPage/Gallary';
 import { Location } from './components/UserPage/Location';
 import {Update} from "./components/AdminPage/Update"
 import {Assignroom} from "./components/AdminPage/Assignroom"
+import { SearchBooking } from './components/AdminPage/SearchBooking';
 
 function App() {
   return (
@@ -35,18 +36,19 @@ function App() {
       <BrowserRouter>
       <Routes>
         {/* USERPAGE */}
-        {/* <Route path="/Header" element={<Header/>}></Route>
+        <Route path="/Header" element={<Header/>}></Route>
         <Route path='/' element={<Home/>}/>
-        <Route path='/' element={<BookingDetails/>}/>
+        <Route path='/BookingDetails' element={<BookingDetails/>}/>
         <Route path='/confirmbooking' element={<ConfirmBooking/>}/>
         <Route path='/Gallary' element={<Gallary/>}></Route>
-        <Route path='/Location' element={<Location/>}></Route> */}
-        {/* ADMIN PAGE */}
+        <Route path='/Location' element={<Location/>}></Route> 
+        {/* ADMIN PAGE
         
-        <Route path='/' element={<AdminHome/>}></Route>
+        {/* <Route path='/' element={<AdminHome/>}></Route>
         <Route path='/Update' element={<Update/>}></Route>
         <Route path='/Assignroom' element={<Assignroom/>}></Route>
         <Route path='/AvailabilityChart' element={<AvailabilityChart/>}></Route>
+        <Route path='/SearchBooking' element={<SearchBooking/>}></Route> */}
       </Routes>
       </BrowserRouter>
     </BookingProvider>

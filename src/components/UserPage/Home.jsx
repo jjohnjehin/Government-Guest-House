@@ -1,4 +1,4 @@
-import React, { useState, }  from 'react';
+import React, { useContext, useState,}  from 'react';
 import { Box, Button, Grid, IconButton,  Typography, Dialog, TextField } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import dayjs from 'dayjs';
@@ -11,6 +11,8 @@ import { Gallary } from './Gallary';
 import { Location } from './Location';
 import { Footer } from './Footer';
 import { BookingDetails } from './BookingDetails';
+import { Header } from './Header';
+import { BookingContext } from './BookingContext';
 
 
 
@@ -20,8 +22,10 @@ export const Home = () => {
 
   const [selectedDate, setSelectedDate] = useState(dayjs())
   const [checkindate,setCheckindate]=useState(dayjs().add(1, 'day').format('DD MMMM YYYY'))
+  console.log("Checkin:",checkindate)
   const [selectedoutdate,setSelectedoutdate]=useState(dayjs())
   const [checkoutdate,setCheckoutdate]=useState(dayjs().add(2, 'day').format('DD MMMM YYYY'))
+  console.log("Checkoutt:",checkoutdate)
   const [opencheckin,setOpencheckin]=useState(false)
   const [opencheckout,setOpencheckout]=useState(false)
   const [open,setOpen]=useState(false)
@@ -46,7 +50,7 @@ export const Home = () => {
  
   
   return (
-    <Box sx={{ position: 'relative', width: '100%', height: '698px' ,  marginTop:"-114px"}}>
+    <Box sx={{ position: 'relative', width: '100%', height: '698px' , marginTop:"-144px"}}>
       <Box
         id='home'
         sx={{
@@ -65,7 +69,6 @@ export const Home = () => {
         
         }}
       />
-
       <Box sx={{ position: 'relative', zIndex: 1, height: '100%',backgroundColor: 'rgba(0, 0, 0, 0.4)' }}>
         <Grid container sx={{ height: '100%'}}>
              
@@ -147,8 +150,7 @@ export const Home = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid size={3} sx={{height:"70px",mx:4,borderRadius:"10px",backgroundColor:"black"}} display={"flex"} 
-                  justifyContent={"center"} alignItems={"center"} >
+                  <Grid size={3} sx={{height:"70px",mx:4,borderRadius:"10px",backgroundColor:"black"}} display={"flex"} justifyContent={"center"} alignItems={"center"} >
                      <GroupsOutlinedIcon  sx={{fontSize:"60px",color:"rgb(187, 189, 190)"}}/>
                      <Box ml={2} sx={{display:"flex",flexDirection:"column",justifyContent:"center",lineHeight:"2px",alignItems:"center",}} >
                       <Box>
@@ -180,7 +182,11 @@ export const Home = () => {
                     <Button variant='contained' sx={{  height: "80%",width: "90%", borderRadius: "10px", background: 'linear-gradient(to bottom, #76EDD2, #0E76D6)', color: '#fff',fontWeight: "bold",fontSize: "28px",textTransform:"none", transition: "all 0.3s ease",'&:hover': {
                     background: 'linear-gradient(to bottom, #76EDD2, #0E76D6)', transform: "scale(1.05)"
                     ,boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)"
-                      }}} onClick={()=>handlenav('location')}>Check Availability</Button>
+                      }}} onClick={()=>handlenav('location',{
+                                    state: {
+                                      checkindate,checkoutdate,guest,room
+                                    }
+                                  })}>Check Availability</Button>
                   </Grid>
 
                 </Grid>
