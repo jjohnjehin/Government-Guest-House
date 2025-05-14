@@ -63,7 +63,7 @@ export const Header = () => {
                           sx={{
                             height: '170px',
                             width: '46%',
-                            backgroundImage:"url(/assests/Images/header back.png)",
+                            backgroundImage:"url(/assets/Images/header.png)",
                             backgroundPosition:"center",
                             backgroundSize:"contain",
                             backgroundRepeat:"no-repeat",

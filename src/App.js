@@ -19,7 +19,12 @@ function App() {
       {/* <Route path='/ConfirmBooking' element={<ConfirmBooking />}></Route> */}
       {/* <Route path='/' element={<Home/>}></Route> */}
       {/* <Route element={<Footer/>}></Route> */}
-      <Route path='/' element={<Home/>}/>
+       <Route path="/" element={
+      <>
+        <Header />
+        <Home />
+      </>
+    } />
       <Route path='/bookingdetails' element={<BookingDetails/>}/>
       <Route path='/confirmbooking' element={<ConfirmBooking/>}/>
     </Routes>
