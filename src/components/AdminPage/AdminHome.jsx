@@ -342,7 +342,7 @@ export const AdminHome=()=>{
                                     <Typography sx={{ color: 'grey', fontSize: '13px' }}>{guest['guest type']}</Typography>
                                 </Grid>
                                 <Grid sx={{ width: '13%', display: 'flex' }}>
-                                    <Grid sx={{ width: '52%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                    <Grid sx={{ width: '45%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                         <Typography sx={{ color: 'green', fontSize: "0.875rem" }}>
                                             {formatDate(guest.checkin)}
                                         </Typography>

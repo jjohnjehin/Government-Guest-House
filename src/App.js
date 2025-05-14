@@ -36,19 +36,19 @@ function App() {
       <BrowserRouter>
       <Routes>
         {/* USERPAGE */}
-        <Route path="/Header" element={<Header/>}></Route>
+        {/* <Route path="/Header" element={<Header/>}></Route>
         <Route path='/' element={<Home/>}/>
         <Route path='/BookingDetails' element={<BookingDetails/>}/>
         <Route path='/confirmbooking' element={<ConfirmBooking/>}/>
         <Route path='/Gallary' element={<Gallary/>}></Route>
-        <Route path='/Location' element={<Location/>}></Route> 
-        {/* ADMIN PAGE
+        <Route path='/Location' element={<Location/>}></Route>  */}
+        {/* ADMIN PAGE */}
         
-        {/* <Route path='/' element={<AdminHome/>}></Route>
+        <Route path='/' element={<AdminHome/>}></Route>
         <Route path='/Update' element={<Update/>}></Route>
         <Route path='/Assignroom' element={<Assignroom/>}></Route>
         <Route path='/AvailabilityChart' element={<AvailabilityChart/>}></Route>
-        <Route path='/SearchBooking' element={<SearchBooking/>}></Route> */}
+        <Route path='/SearchBooking' element={<SearchBooking/>}></Route>
       </Routes>
       </BrowserRouter>
     </BookingProvider>
