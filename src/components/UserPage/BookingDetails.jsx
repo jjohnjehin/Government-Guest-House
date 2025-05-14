@@ -97,10 +97,10 @@ const location = useLocation();
                             <Grid sx={{width:"380px",height:"50px",marginLeft:"10px",display:"flex",justifyContent:"space-evenly",alignItems:"center"}}>
                               {
                                 [
-                                  { name: "Assign", path: "/" },
-                                  { name: "SearchBooking", path: "/SearchBooking" },
-                                  { name: "AvailabilityChart", path: "/AvailabilityChart" }
-                                ].map((item, index) => (
+                      { name: "Home", path: "/" },
+                      { name: "Gallery", path: "/Gallary" },
+                      { name: "Location", path: "/Location" }
+                    ].map((item, index) => (
                                   <Grid
                                       key={index}
                                       sx={{
@@ -143,7 +143,7 @@ const location = useLocation();
                         {/* ROW ONE */}
                         <Grid container sx={{width:"100%",height:'40px',display:'flex',justifyContent:'space-between'}}>
                           <Grid item size={{lg:2.7}} sx={{ height: "100%",width:'100%',border:"1px"}}>
-                            {/* <TextField size="small" fullWidth label={
+                            <TextField size="small" fullWidth label={
                                 <span>
                                   Check-In Date <span style={{ color: 'red' }}>*</span>
                                 </span>
@@ -151,7 +151,7 @@ const location = useLocation();
                               type="date"
                               InputLabelProps={{ shrink: true }}
                               value={checkindate}
-                              onChange={handleChangeCheckInDate}/> */}
+                              onChange={handleChangeCheckInDate}/>
                           </Grid>
                           <Grid item size={{lg:2.7}} sx={{width:"100%",height: "100%"}}>
                             <TextField fullWidth label={
