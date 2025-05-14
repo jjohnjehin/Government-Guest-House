@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { OfficialconLetter } from './OfficialconLetter';
 import { CurrentBooking } from './CurrentBooking';
 
+
 export const Assignroom = () => {
     const [guesthouse,setGuesthouse]=useState("Nagercoil Guest House")
     const [roomType,setRoomType]=useState("Deluxe Room")
@@ -25,10 +26,49 @@ export const Assignroom = () => {
         {img:"./ngl.png",guesthouse:"Nagercoil Guest House",suite:4,deluxe:4,roomType:["Suite Room","Deluxe Room"]}
 
     ]
+     const[active,setActive]=useState("Assign")
+          const handleNavigation = (index, path) => {
+            setActive(index);
+            navigate(path);
+          };
+      const navigate=useNavigate()
+      
   return (
     <Box>
+      {/* HEADER */}
+      <Grid sx={{width:"100%",height:"100px",display:"flex",justifyContent:"center"}}>
+                                  <Grid sx={{width:"300px",height:"70px",position:"absolute",left:"40px",top:"20px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/tamilnaduogo2.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}></Grid>
+                                  <Grid sx={{width:"45%",height:"80px",backgroundImage: `url(${process.env.PUBLIC_URL}/assets/Images/headerbackblue.png)`,backgroundPosition:"top",backgroundSize:"contain",backgroundRepeat:"no-repeat",backgroundSize: "100% 100%",display:"flex",alignItems:"center"}}>
+                                  {/* GOV LOGO */}
+                                    <Grid sx={{width:"80px",height:'65px',marginLeft:"100px",backgroundImage:`url(${process.env.PUBLIC_URL}/assets/Images/Gov_Logo.png)`,backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat"}} onClick={()=>navigate('/')}></Grid>
+                                    <Grid sx={{width:"380px",height:"50px",marginLeft:"10px",display:"flex",justifyContent:"space-evenly",alignItems:"center"}}>
+                                      {
+                                        [
+                                          { name: "Assign", path: "/Assign" },
+                                          { name: "SearchBooking", path: "/SearchBooking" },
+                                          { name: "AvailabilityChart", path: "/AvailabilityChart" }
+                                        ].map((item, index) => (
+                                          <Grid
+                                                key={index}
+                                                sx={{
+                                                  fontSize: "18px",
+                                                  color: "white",
+                                                  fontWeight: item.name === "Assign" ? "600" : "400",
+                                                  cursor: "pointer",
+                                                  borderBottom: item.name === "Assign" ? "3px solid white" : "none",
+                                                  pb: "4px"
+                                                }}
+                                                onClick={() => handleNavigation(index, item.path)}
+                                              >
+                                                {item.name}
+                                          </Grid>
+                                        ))
+                                      }
+                                    </Grid>
+                                  </Grid>
+                                </Grid>
         <Grid container display={"flex"} justifyContent={"center"}>
-            <Grid size={{xs:9,md:12}} sx={{height:"100px",backgroundImage:"url(./kklogo.png)",backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat",mt:5}}>
+            <Grid size={{xs:9,md:12}} sx={{height:"100px",backgroundImage:"url(./kklogo.png)",backgroundPosition:"center",backgroundSize:"contain",backgroundRepeat:"no-repeat",}}>
 
             </Grid>
             <Grid size={12} my={5} >
@@ -223,7 +263,7 @@ export const Assignroom = () => {
                                         <Grid size={4}>
                                             <Typography color="#B0B0B0">Tariff</Typography>
                                             <Box mt={0.5}>
-                                                <Typography variant='h6'><span style={{color:"#B0B0B0",fontSize:"15px"}}>₹</span>2,000</Typography>
+                                                <Typography variant='h6'><span style={{color:"#B0B0B0",fontSize:"15px"}}>₹ </span>2,000</Typography>
 
                                             </Box>
                                             </Grid>
