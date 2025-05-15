@@ -9,10 +9,10 @@ import { useState,useEffect } from "react";
 
 export const ConfirmBooking = () => {
   const location = useLocation();
-  const { checkIn, checkOut, noOfRoom, noOfGuest, guestHouse, room } = location.state || {};
+  const { checkin, checkout, room, guest, guestHouse,roomType } = location.state || {};
 
   // Now you can use those variables in your component.
-  console.log(checkIn, checkOut, noOfRoom, noOfGuest, guestHouse, room);
+  // console.log(checkIn, checkOut, noOfRoom, noOfGuest, guestHouse, room);
   const item = data.find(
     (item) => item.name && item.name.toLowerCase() === guestHouse.toLowerCase()
   );
@@ -79,11 +79,11 @@ export const ConfirmBooking = () => {
                   <Grid container sx={{width:"50%",height:"50px",display:"flex",justifyContent:'space-between',position:"relative"}}>
                     <Grid items size={{lg:5}} sx={{width:'100%',height:"100%"}}>
                       <Typography sx={{color:"green"}}>Check In</Typography>
-                      <Typography>{checkIn||"Not Selected"}</Typography>
+                      <Typography>{checkin||"Not Selected"}</Typography>
                     </Grid>
                     <Grid items size={{lg:5}} sx={{width:'100%',height:"100%"}}>
                       <Typography sx={{color:"red"}}>Check Out</Typography>
-                      <Typography>{checkOut||"Not Selected"}</Typography>
+                      <Typography>{checkout||"Not Selected"}</Typography>
                     </Grid>
                     <Box sx={{height:"48px",width:"1px", bgcolor:"grey",position:"absolute",left:"130px"}}></Box>
                   </Grid>
@@ -98,7 +98,7 @@ export const ConfirmBooking = () => {
                         <Typography sx={{fontSize:"12px"}}>Selected Room Type</Typography>
                       </Grid>
                       <Grid sx={{width:"100%",height:"40px",display:'flex',justifyContent:"flex-start",alignItems:"center"}}>
-                        <Typography sx={{fontSize:"14px"}}>{room || "Room not Selected"} Room / {noOfGuest ||0} Guest</Typography>
+                        <Typography sx={{fontSize:"14px"}}>{room || "Room not Selected"} Room / {guest ||0} Guest</Typography>
                       </Grid>
                       <Grid sx={{width:"100%",height:"40px",display:'flex',justifyContent:"flex-start",alignItems:"center"}}>
                         <Typography sx={{color:"#0081FF",fontWeight:"600"}}>Total Tariff : 2000/-</Typography>

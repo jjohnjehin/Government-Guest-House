@@ -20,16 +20,28 @@ import {
   
 
 export const BookingDetails = () => {
+  const location = useLocation();
+  const { checkin,checkout,guest,room,selectedLocation } = location.state || {};
+  console.log("selecetdlocationnnnnn:",selectedLocation)
   // const [active, setActive] = useState("Home");
   
-    const [guestHouse, setGuestHouse] = useState("Not Selected");
+    const [guestHouse, setGuestHouse] = useState("selectedLocation");
     const [checkIn,setCheckIn]=useState("")
     const [checkOut,setCheckOut]=useState("")
     // const [room,setRoom]=useState("Not Selected")
-    const [noOfRoom,setNoOfRoom]=useState(1)
-    const [noOfGuest,setNoOfGuest]=useState(1)
+    const [noOfRoom,setNoOfRoom]=useState(room)
+    const [noOfGuest,setNoOfGuest]=useState(guest)
     const [designation,setDesignation]=useState("")
     const [roomType,setRoomType]=useState("")
+    const [purposeOfVisit,setPurposeOfVisit]=useState("")
+    const [salutation,setsalutation]=useState("")
+    const [name,setName]=useState("")
+    const [number,setNumber]=useState("")
+    const [email,setEmail]=useState("")
+    const [serving,setServing]=useState("")
+    const[guestType,setGuestType]=useState("")
+    // const[designation,setdesignation]=useState("")
+    const [remark,setRemark]=useState("")
     const navigate=useNavigate()
     console.log("checkindate:",checkIn)
     const item = data.find(
@@ -39,12 +51,11 @@ export const BookingDetails = () => {
       console.log("Matched Item:", item);
 
 
+const handleChangeGuestHouse=(event)=>{
+  setGuestHouse(event.target.value);
+}
 
-  const handleChange = (event) => {
-    setGuestHouse(event.target.value);
-    console.log("Selected Guest House:", event.target.value);
-  };
-  const handleChangeCheckInDate = (event) => {
+const handleChangeCheckInDate = (event) => {
     setCheckIn(event.target.value);
     console.log("Selected date:", event.target.value);
   };
@@ -52,6 +63,7 @@ export const BookingDetails = () => {
     setCheckOut(event.target.value);
     console.log("Selected date:", event.target.value);
   };
+
   const handleChangeRoomType= (event) => {
     setRoomType(event.target.value);
     console.log("Selected room:", event.target.value);
@@ -64,6 +76,33 @@ export const BookingDetails = () => {
     setNoOfGuest(event.target.value);
     console.log("Selected room:", event.target.value);
   };
+const handleChangePurposeOfVisit=(event)=>{
+  setPurposeOfVisit(event.target.value)
+}
+const handleChangeSalutation=(event)=>{
+  setsalutation(event.target.value)
+}
+const handleChangeName=(event)=>{
+  setName(event.target.value)
+}
+const handleChangeEmail=(event)=>{
+  setEmail(event.target.value)
+}
+const handleChangeNumber=(event)=>{
+  setNumber(event.target.value)
+}
+const handleChangeServing=(event)=>{
+  setServing(event.target.value)
+}
+const handleChangeGuestType=(event)=>{
+  setGuestType(event.target.value)
+}
+const handleChangeRemark=(event)=>{
+  setRemark(event.target.value)
+}
+const handleChangeDesignation=(event)=>{
+  setDesignation(event.target.value)
+}
   // const navigate=useNavigate()
     const[active,setActive]=useState("Home")
     const handleNavigation = (index, path) => {
@@ -71,8 +110,7 @@ export const BookingDetails = () => {
       navigate(path);
     };
 // DATA FROM HOME PAGE
-const location = useLocation();
-  const { checkindate,checkoutdate,guest,room } = location.state || {};
+
 // const {
 //   checkindate,
 //   checkoutdate,
@@ -82,6 +120,37 @@ const location = useLocation();
 //   setRoom
 // } = useContext(BookingContext);
 // console.log("CHECKKKKKK:",checkindate)
+const Status="Pending"
+const handleSubmit = async () => {
+  const formData = {
+    checkin,checkout,
+    noOfRoom,
+    noOfGuest,
+    designation,
+    roomType,purposeOfVisit,salutation,name,number,email,serving,designation,guestType,remark,Status,selectedLocation
+  };
+
+  try {
+    const response = await fetch('http://localhost:5000/bookings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to save booking');
+    }
+
+    const result = await response.json();
+    console.log('✅ Booking saved:', result);
+    alert('Booking saved successfully!');
+  } catch (error) {
+    console.error('❌ Error:', error);
+    alert('Error saving booking.');
+  }
+};
   return (
     <Box sx={{width:'100%',height:'100%'}}>
       {/* HEADER */}
@@ -142,50 +211,47 @@ const location = useLocation();
                       <Box sx={{width:'100%',height:"140px",marginTop:"10px",display:'flex',flexDirection:"column",justifyContent:'space-between'}}>
                         {/* ROW ONE */}
                         <Grid container sx={{width:"100%",height:'40px',display:'flex',justifyContent:'space-between'}}>
-                          <Grid item size={{lg:2.7}} sx={{ height: "100%",width:'100%',border:"1px"}}>
-                            <TextField size="small" fullWidth label={
-                                <span>
-                                  Check-In Date <span style={{ color: 'red' }}>*</span>
-                                </span>
-                              }
-                              type="date"
-                              InputLabelProps={{ shrink: true }}
-                              value={checkindate}
-                              onChange={handleChangeCheckInDate}/>
+                          <Grid item size={{lg:2.7}} sx={{ height: "100%"}}>
+                            <TextField
+      size="small"
+      fullWidth
+      label={
+        <span>
+          Check-In Date <span style={{ color: 'red' }}>*</span>
+        </span>
+      }
+      type="date"
+      InputLabelProps={{ shrink: true }}
+      value={checkIn}
+      defaultValue={checkin}
+      onChange={handleChangeCheckInDate}
+    />
                           </Grid>
-                          <Grid item size={{lg:2.7}} sx={{width:"100%",height: "100%"}}>
-                            <TextField fullWidth label={
-                                  <span>
-                                    Check-Out Date <span style={{ color: 'red' }}>*</span>
-                                  </span>
-                                }
-                                type="date"
-                                InputLabelProps={{ shrink: true }}
-                                value={checkOut}
-                                onChange={handleChangeCheckOutDate}
-                                sx={{'& .MuiInputBase-root': {height: '40px',}}}/>
+
+                          <Grid item size={{lg:2.7}} sx={{height: "100%",width: '100%',border: "1px solid",borderColor: 'rgba(0, 0, 0, 0.23)',borderRadius: '4px',padding: 1}}>
+                            <Typography >{checkout}</Typography>
                           </Grid>
-                          <Grid item size={{lg:2.7}} sx={{width:"100%",height: "100%"}}>
+                          <Grid item size={{lg:2.7}}>
                             <TextField fullWidth label={
                                                         <span>
                                                         No of Rooms <span style={{ color: 'red' }}>*</span>
                                                         </span>
-                                                    } type="number" defaultValue={1} value={noOfRoom} onChange={handleChangeNoOfRoom}sx={{'& .MuiInputBase-root': {height: '40px',}}} />
+                                                    } type="number" defaultValue={1} value={noOfRoom||room} onChange={handleChangeNoOfRoom}sx={{'& .MuiInputBase-root': {height: '40px',}}} />
                           </Grid>
                           <Grid item size={{lg:2.7}} c>
                             <TextField fullWidth label={
                                                           <span>
                                                           No of Guests <span style={{ color: 'red' }}>*</span>
                                                           </span>
-                                                      } type="number" defaultValue={1} value={noOfGuest} onChange={handleChangeNoOfGuest}sx={{'& .MuiInputBase-root': {height: '40px',}}} />
+                                                      } type="number" defaultValue={1} value={noOfGuest||guest} onChange={handleChangeNoOfGuest}sx={{'& .MuiInputBase-root': {height: '40px',}}} />
                           </Grid>
                         </Grid>
                         {/* ROW TWO */}
                         <Grid container sx={{width:"100%",height:'40px',display:'flex',justifyContent:'space-between'}} >
-                          <Grid item size={{lg:5.8}} sx={{width:"100%",height:"100%"}}>
+                          <Grid item size={{lg:5.8}} sx={{height: "100%",width: '100%'}}>
                             <FormControl fullWidth size="small">
                                 <InputLabel id="room-type-label">Select Guest House <Box component="span" sx={{ color: 'red' }}>*</Box></InputLabel>
-                                <Select defaultValue=""  label="Select Guest House*" value={guestHouse} onChange={handleChange}>
+                                <Select defaultValue=""  label="Select Guest House*" value={guestHouse}  onChange={handleChangeGuestHouse}>
                                     <MenuItem value="Nagercoil Guest House">Nagercoil Guest House</MenuItem>
                                     <MenuItem value="Kanyakumari Guest House">Kanyakumari Guest House</MenuItem>
                                 </Select>
@@ -203,9 +269,9 @@ const location = useLocation();
                           <Grid item size={{lg:2.7}} sx={{width:"100%",height: "100%"}}>
                             <FormControl fullWidth size="small">
                                 <InputLabel id="room-type-label">Purpose Of Visit <Box component="span" sx={{ color: 'red' }}>*</Box></InputLabel>
-                                <Select defaultValue=""  label="Select Guest House*">
+                                <Select defaultValue=""  label="Select Purpose of Visit*" value={purposeOfVisit} onChange={handleChangePurposeOfVisit}>
                                     <MenuItem value="Select">Select</MenuItem>
-                                    <MenuItem value="Select">Select</MenuItem>
+                                    <MenuItem value="Selected">Selected</MenuItem>
                                 </Select>
                             </FormControl>
                           </Grid>
@@ -223,8 +289,8 @@ const location = useLocation();
                         <Grid container sx={{width:"100%",height:"40px",display:"flex",justifyContent:'space-between'}}>
                           <Grid item size={{lg:1.7}} sx={{width:"100%",height:"100%"}}>
                             <FormControl fullWidth size="small">
-                                <InputLabel id="room-type-label">Salutation <Box component="span" sx={{ color: 'red' }}>*</Box></InputLabel>
-                                <Select defaultValue=""  label="Select Guest House*">
+                                <InputLabel id="room-type-label" >Salutation <Box component="span" sx={{ color: 'red' }}>*</Box></InputLabel>
+                                <Select defaultValue=""  label="Select Guest House*" onChange={handleChangeSalutation}>
                                     <MenuItem value="Select">Select</MenuItem>
                                     <MenuItem value="select">select</MenuItem>
                                 </Select>
@@ -235,7 +301,7 @@ const location = useLocation();
                                           <span>
                                           Enter Your Full Name <span style={{ color: 'red' }}>*</span>
                                           </span>
-                                      } />
+                                      } onChange={handleChangeName} />
                           </Grid>
                         </Grid>
                         {/* ROW TWO */}
@@ -245,14 +311,14 @@ const location = useLocation();
                                           <span>
                                           Valid Whattsapp Number for Booking Communication <span style={{ color: 'red' }}>*</span>
                                           </span>
-                                      } />
+                                      } onChange={handleChangeNumber}/>
                           </Grid>
                           <Grid item size={{lg:5.8}} sx={{width:"100%",height:"100%"}}>
                             <TextField size="small" fullWidth label={
                                           <span>
                                           Email <span style={{ color: 'red' }}>*</span>
                                           </span>
-                                      } />
+                                      } onChange={handleChangeEmail}/>
                           </Grid>
                         </Grid>
                         {/* LINE */}
@@ -267,8 +333,8 @@ const location = useLocation();
                           <Grid container sx={{width:"100%",height:"40px",display:"flex",justifyContent:'space-between'}}>
                             <Grid item size={{lg:5.8}} sx={{width:"100%",height:"100%"}}>
                               <FormControl fullWidth size="small">
-                                  <InputLabel id="room-type-label">Are You Serving in TamilNadu <Box component="span" sx={{ color: 'red' }}>*</Box></InputLabel>
-                                  <Select defaultValue=""  label="Select Guest House*">
+                                  <InputLabel id="room-type-label" onChange>Are You Serving in TamilNadu <Box component="span" sx={{ color: 'red' }}>*</Box></InputLabel>
+                                  <Select defaultValue=""  label="Select serving*" onChange={handleChangeServing}>
                                       <MenuItem value="Yes">Yes</MenuItem>
                                       <MenuItem value="No">No</MenuItem>
                                   </Select>
@@ -277,7 +343,7 @@ const location = useLocation();
                             <Grid item size={{lg:5.8}} sx={{width:"100%",height:"100%"}}>
                               <FormControl fullWidth size="small">
                                   <InputLabel id="room-type-label">Guest Type <Box component="span" sx={{ color: 'red' }}>*</Box></InputLabel>
-                                  <Select defaultValue=""  label="Select Guest House*">
+                                  <Select defaultValue=""  label="Select Guest Type*" onChange={handleChangeGuestType}>
                                       <MenuItem value="Government Official">Government Official</MenuItem>
                                       <MenuItem value="Non Government Official">Non Government Official</MenuItem>
                                   </Select>
@@ -291,9 +357,9 @@ const location = useLocation();
                             <Grid item size={{lg:5.8}} sx={{width:"100%",height:"100%"}}>
                               <FormControl fullWidth size="small">
                                   <InputLabel id="room-type-label">Designation of Official Booking <Box component="span" sx={{ color: 'red' }}>*</Box></InputLabel>
-                                  <Select defaultValue=""  label="Select Guest House*">
-                                      <MenuItem value="Delux">Delux</MenuItem>
-                                      <MenuItem value="Ultra Delux">Ultra Delux</MenuItem>
+                                  <Select defaultValue=""  label="Select Designation*" onChange={handleChangeDesignation}>
+                                      <MenuItem value="Minister">Minister</MenuItem>
+                                      <MenuItem value="Advisor">Advisor</MenuItem>
                                   </Select>
                               </FormControl>
                             </Grid>
@@ -302,7 +368,7 @@ const location = useLocation();
                                             <span>
                                             Remark <span style={{ color: 'red' }}>*</span>
                                             </span>
-                                        } />
+                                        } onChange={handleChangeRemark} />
                             </Grid>
                           </Grid>
                         </Grid>
@@ -329,24 +395,24 @@ const location = useLocation();
                                         }}
                                         />
 
-                                        <Typography variant="subtitle1" fontWeight="bold">{guestHouse}</Typography>
-                                        <Typography variant="body2" color="text.secondary" mb={2}>{item ? item.location : "No Guest House Found"}</Typography>
+                                        <Typography variant="subtitle1" fontWeight="bold">{selectedLocation}</Typography>
+                                        <Typography variant="body2" color="text.secondary" mb={2}>{selectedLocation }</Typography>
                                     <Divider sx={{ mb: 2 }} />
                                     <Grid container sx={{display:'flex',justifyContent:'space-between',position:"relative",height:"100%",width:"90%"}}>
                                       {/* VDERTICAL LINE */}
                                       <Box sx={{width:"1px",height:"100%",bgcolor:'grey',position:"absolute",left:"120px",top:"0px"}}></Box>
                                         <Grid item size={{lg:5}}  sx={{width:"100%",height:"100%"}}>
                                             <Typography variant="body2" color="green" fontWeight="bold">Check-in</Typography>
-                                            <Typography fontWeight="500" variant="body1">{checkindate||"Not Selected"}</Typography>
+                                            <Typography fontWeight="500" variant="body1">{checkin||"Not Selected"}</Typography>
                                         </Grid>
                                         <Grid item size={{lg:5}} sx={{width:"100%",height:"100%"}} >
                                             <Typography variant="body2" color="red" fontWeight="bold">Check-out</Typography>
-                                            <Typography fontWeight="500" variant="body1">{checkoutdate||"Not selected"}</Typography>
+                                            <Typography fontWeight="500" variant="body1">{checkout||"Not selected"}</Typography>
                                         </Grid>
                                     </Grid>
                                     <Divider sx={{ my: 2 }} />
                                     <Typography variant="body2" color="text.secondary">Selected Room Type</Typography>
-                                    <Typography fontWeight="bold" variant="body1">{room||"Not selected"}</Typography>
+                                    <Typography fontWeight="bold" variant="body1">{roomType||"Not selected"}</Typography>
                                     <Typography variant="body2" color="text.secondary">{noOfRoom||0} Room , {noOfGuest||0} Guest</Typography>
                                 </CardContent>
                                 </Card>
@@ -359,21 +425,43 @@ const location = useLocation();
                                 <Typography variant="h6" sx={{ color: '#004085', fontWeight: 'bold' ,marginLeft:"10px"}}>Rs 0/-</Typography>
                               </Box>
                               <Box sx={{width:"52%",height:'40px',display:'flex',justifyContent:'center',borderRadius:"10px",boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.1), 0px -4px 10px rgba(0, 0, 0, 0.05)',alignItems:'center'}}>
-                              <Button variant="contained" sx={{background: 'linear-gradient(to top, #007bff, #00ffcc)',color: 'white',fontWeight: 'bold',fontSize: '1.1rem',px: 4,py: 1,borderRadius: '7px',boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',textTransform: 'none','&:hover': {background: 'linear-gradient(to top, #0056b3, #00cc99)',},height:"30px"}}
-                                onClick={() => {
-                                  navigate('/ConfirmBooking', {
-                                    state: {
-                                      checkIn,
-                                      checkOut,
-                                      noOfRoom,
-                                      noOfGuest,
-                                      guestHouse,
-                                      room,
-                                      designation
-                                    }
-                                  });
-                                }}
-                              >Book Now</Button>
+                              <Button
+                                      variant="contained"
+                                      sx={{
+                                        background: 'linear-gradient(to top, #007bff, #00ffcc)',
+                                        color: 'white',
+                                        fontWeight: 'bold',
+                                        fontSize: '1.1rem',
+                                        px: 4,
+                                        py: 1,
+                                        borderRadius: '7px',
+                                        boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.2)',
+                                        textTransform: 'none',
+                                        '&:hover': {
+                                          background: 'linear-gradient(to top, #0056b3, #00cc99)',
+                                        },
+                                        height: "30px"
+                                      }}
+                                      onClick={() => {
+                                        // 🔹 call your custom function;
+                                        handleSubmit()
+                                        // 🔹 then navigate
+                                        navigate('/ConfirmBooking', {
+                                          state: {
+                                            checkin,
+                                            checkout,
+                                            guest,
+                                            room,
+                                            guestHouse,
+                                            room,
+                                            designation
+                                          }
+                                        });
+                                      }}
+                                    >
+                                      Book Now
+                              </Button>
+
                               </Box>
                               </Box>
                             </Box>

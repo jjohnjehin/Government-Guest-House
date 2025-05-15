@@ -9,7 +9,7 @@ import CardActions from '@mui/material/CardActions';
 import {useNavigate} from 'react-router-dom'
 
 
-export const Location = () => {
+export const Location = ({checkin,checkout,room,guest}) => {
     const location=[
         {img:"/assets/Images//ngl.png",name:"Nagercoil Guest House",address:"Nagercoil,Tamilnadu",map:"https://maps.app.goo.gl/GArqHPh5Wj2Qovsp9"},
         {img:"/assets/Images//kk.png",name:"Kanniyakumari Guest House",address:"Kanniyakumari,Tamilnadu",map:"https://maps.app.goo.gl/yQEjfuAsaB1h2rJP8"}
@@ -53,7 +53,12 @@ export const Location = () => {
       </CardActionArea>
       <CardActions>
         <Box  sx={{height:"65px",width:"70%",backgroundColor:"white",display:"flex",justifyContent:"center",alignItems:"center",borderRadius:"10px"}}>
-        <Button variant='contained' sx={{height:"80%",width:"90%",borderRadius:"10px",background: 'linear-gradient(to bottom, #76EDD2, #0E76D6)',color: '#fff',fontWeight:"bold",fontSize:"27px",textTransform:"none"}} onClick={()=>nav('/bookingdetails')}>Book Now</Button>
+        <Button variant='contained' sx={{height:"80%",width:"90%",borderRadius:"10px",background: 'linear-gradient(to bottom, #76EDD2, #0E76D6)',color: '#fff',fontWeight:"bold",fontSize:"27px",textTransform:"none"}}
+         onClick={()=>nav('/bookingdetails',{
+          state:{
+            checkin,checkout,room,guest,selectedLocation: location.name
+          }
+         })}>Book Now</Button>
 
         </Box>
         

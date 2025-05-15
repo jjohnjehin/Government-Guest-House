@@ -1,9 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter,Routes,Route } from 'react-router-dom';
-import { BookingDetails } from "./components/UserPage/BookingDetails"
-import { ConfirmBooking } from "./components/UserPage/ConfirmBooking"
-import {Footer} from "./components/Footer"
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BookingDetails } from "./components/UserPage/BookingDetails";
+import { ConfirmBooking } from "./components/UserPage/ConfirmBooking";
+import { Footer } from "./components/Footer";
 import { AdminHome } from './components/AdminPage/AdminHome';
 import { Header } from './components/UserPage/Header';
 import { Home } from './components/UserPage/Home';
@@ -11,70 +10,40 @@ import { AvailabilityChart } from './components/AdminPage/AvailabilityChart';
 import { BookingProvider } from './components/UserPage/BookingContext';
 import { Gallary } from './components/UserPage/Gallary';
 import { Location } from './components/UserPage/Location';
-import {Update} from "./components/AdminPage/Update"
-import {Assignroom} from "./components/AdminPage/Assignroom"
+import { Update } from "./components/AdminPage/Update";
+import { Assignroom } from "./components/AdminPage/Assignroom";
 import { SearchBooking } from './components/AdminPage/SearchBooking';
 
 function App() {
   return (
-<<<<<<< HEAD
-    <BrowserRouter>
-    {/* <Header/> */}
-    {/* <Header /> */}
-    <Routes>
-      {/* <Route path="/" element={<Header/>}></Route> */}
-      {/* <Route path='/' element={<BookingDetails/>}></Route> */}
-      {/* <Route path='/ConfirmBooking' element={<ConfirmBooking />}></Route> */}
-      {/* <Route path='/' element={<Home/>}></Route> */}
-      {/* <Route element={<Footer/>}></Route> */}
-       <Route path="/" element={
-      <>
-        <Header />
-        <Home />
-      </>
-    } />
-      <Route path='/bookingdetails' element={<BookingDetails/>}/>
-      <Route path='/confirmbooking' element={<ConfirmBooking/>}/>
-    </Routes>
-    </BrowserRouter>
-=======
-    // <BrowserRouter>
-    // {/* <Header/> */}
-    // {/* <Header /> */}
-    // <Routes>
-    //   {/* <Route path="/" element={<Header/>}></Route> */}
-    //   {/* <Route path='/' element={<BookingDetails/>}></Route> */}
-    //   {/* <Route path='/ConfirmBooking' element={<ConfirmBooking />}></Route> */}
-    //   {/* <Route path='/' element={<Home/>}></Route> */}
-    //   {/* <Route element={<Footer/>}></Route> */}
-    //   <Route path='/' element={<Home/>}/>
-    //   <Route path='/bookingdetails' element={<BookingDetails/>}/>
-    //   <Route path='/confirmbooking' element={<ConfirmBooking/>}/>
-    //   <Route path='/AvailabilityChart' element={<AvailabilityChart/>}></Route>
-    // </Routes>
-    // </BrowserRouter>
     <BookingProvider>
       <BrowserRouter>
-      <Routes>
-        {/* USERPAGE */}
-        {/* <Route path="/Header" element={<Header/>}></Route>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/BookingDetails' element={<BookingDetails/>}/>
-        <Route path='/confirmbooking' element={<ConfirmBooking/>}/>
-        <Route path='/Gallary' element={<Gallary/>}></Route>
-        <Route path='/Location' element={<Location/>}></Route>  */}
-        {/* ADMIN PAGE */}
-        
-        <Route path='/' element={<AdminHome/>}></Route>
-        <Route path='/Update' element={<Update/>}></Route>
-        <Route path='/Assignroom' element={<Assignroom/>}></Route>
-        <Route path='/AvailabilityChart' element={<AvailabilityChart/>}></Route>
-        <Route path='/SearchBooking' element={<SearchBooking/>}></Route>
-      </Routes>
+        <Routes>
+          {/* USER PAGE */}
+          {/* <Route path="/" element={
+            <>
+              <Header />
+              <Home />
+              <Footer />
+            </>
+          } />
+          <Route path="/bookingdetails" element={<BookingDetails />} />
+          <Route path="/confirmbooking" element={<ConfirmBooking />} />
+          <Route path="/gallary" element={<Gallary />} />
+          <Route path="/location" element={<Location />} /> */}
+
+          {/* ADMIN PAGE */}
+          <Route path="/" element={<AdminHome />} />
+          <Route path="/update" element={<Update />} />
+          <Route path="/assignroom" element={<Assignroom />} />
+          <Route path="/availabilitychart" element={<AvailabilityChart />} />
+          <Route path="/searchbooking" element={<SearchBooking />} />
+        </Routes>
       </BrowserRouter>
     </BookingProvider>
->>>>>>> 80bae836de3dd09ab72c46b88646d525a2ac8e79
   );
 }
 
 export default App;
+
+

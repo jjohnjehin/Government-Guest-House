@@ -13,6 +13,16 @@ import * as XLSX from 'xlsx';
 import { useEffect, useState } from "react";
 import axios from "axios";
 export const SearchBooking=()=>{
+    const [guests, setGuests] = useState([]);
+const count=guests.length
+    useEffect(() => {
+        fetch("http://localhost:5000/bookings")
+          .then((res) => res.json())
+          .then((data) => {
+            setGuests(data);
+          });
+      }, []);
+      console.log("guestssssss:",guests)
     const navigate=useNavigate()
     const[active,setActive]=useState("SearchBooking")
         const handleNavigation = (index, path) => {
@@ -50,16 +60,9 @@ export const SearchBooking=()=>{
   console.log("BookedTooo:",bookedTo)
   const [filteredGuests, setFilteredGuests] = useState([]);
   console.log("fillll:",filteredGuests)
-const [guests, setGuests] = useState([]);
-const count=guests.length
+
       
-      useEffect(() => {
-        fetch("http://localhost:3001/guests")
-          .then((res) => res.json())
-          .then((data) => {
-            setGuests(data);
-          });
-      }, []);
+      
       const handleChange = (setter) => (event) => setter(event.target.value);
 
   const handleSubmit = () => {
@@ -91,7 +94,7 @@ const count=guests.length
     return (
       (designation ? guest.designation === designation : true) &&
       (status ? guest.Status === status : true) &&
-      (guestHouse ? guest.Location === guestHouse : true) &&
+      (guestHouse ? guest.selectedLocation === guestHouse : true) &&
       (purposeOfVisit ? guest.purposeOfVisit === purposeOfVisit : true) &&
       (checkIn ? new Date(guest.checkin) >= new Date(checkIn) : true) &&
       (finalCheckOut ? new Date(guest.checkout) <= new Date(finalCheckOut) : true) &&
@@ -369,8 +372,8 @@ const formatDate = (dateStr) => {
                         <Typography sx={{ color: 'grey', fontSize: '13px' }}>{guest.designation}</Typography>
                         </Grid>
                         <Grid sx={{ width: '15%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                            <Typography sx={{ fontSize: "0.875rem" }}>{guest.category}</Typography>
-                            <Typography sx={{ color: 'grey', fontSize: '13px' }}>{guest['guest type']}</Typography>
+                            <Typography sx={{ fontSize: "0.875rem" }}>{guest.guestType}</Typography>
+                            <Typography sx={{ color: 'grey', fontSize: '13px' }}>{guest.designation}</Typography>
                         </Grid>
                         <Grid sx={{ width: '13%', display: 'flex' }}>
                             <Grid sx={{ width: '52%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -391,15 +394,15 @@ const formatDate = (dateStr) => {
                         <Grid sx={{ width: '17%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         <Grid sx={{ height: '30%', display: 'flex', alignItems: 'center' }}>
                             <Typography sx={{ color: 'grey' }}>
-                            Rooms: <span style={{ color: 'black', fontSize: "0.875rem" }}>{guest.No_Of_Rooms},</span>
+                            Rooms: <span style={{ color: 'black', fontSize: "0.875rem" }}>{guest.noOfRoom},</span>
                             </Typography>
                             <Typography sx={{ paddingLeft: '5px', color: 'grey' }}>
-                            Guests: <span style={{ color: 'black', fontSize: "0.875rem" }}>{guest.No_Of_Guests}</span>
+                            Guests: <span style={{ color: 'black', fontSize: "0.875rem" }}>{guest.noOfGuest}</span>
                             </Typography>
                         </Grid>
                         <Grid sx={{ height: '30%', display: 'flex' }}>
-                            <Typography sx={{ fontSize: "0.875rem", color: '#006D77DE' }}>{guest.Room_Type}</Typography>
-                            <Typography sx={{ fontSize: "0.875rem" }}>, {guest.Location}</Typography>
+                            <Typography sx={{ fontSize: "0.875rem", color: '#006D77DE' }}>{guest.roomType}</Typography>
+                            <Typography sx={{ fontSize: "0.875rem" }}>, {guest.selectedLocation}</Typography>
                         </Grid>
                         </Grid>
                         <Grid sx={{ width: '8%', display: 'flex', alignItems: 'center' }}>
@@ -413,21 +416,28 @@ const formatDate = (dateStr) => {
                         </Grid>
                         </Grid>
                         <Grid sx={{ width: '14%', display: 'flex', alignItems: 'center' }}>
-                        <Tooltip title={guest.Remarks?.split(" ").length > 7 ? guest.Remarks : ""}>
-                            <Typography
-                            variant="h6" sx={{paddingTop: '5px',color: 'grey',fontSize: "0.860rem",whiteSpace: 'pre-line',
-                                '&:hover': guest.Remarks?.split(" ").length > 7 ? {
-                                cursor: 'pointer'
-                                } : {}}}>
-                            <i>
-                                {
-                                guest.Remarks?.split(" ").length > 7
-                                    ? guest.Remarks.split(" ").slice(0, 4).join(" ") + "\n" + guest.Remarks.split(" ").slice(4, 7).join(" ") + " ..."
-                                    : guest.Remarks
-                                }
-                            </i>
-                            </Typography>
-                        </Tooltip>
+                            <Tooltip title={guest.remark?.split(" ").length > 7 ? guest.remark : ""}>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        paddingTop:'5px',
+                                    color: 'grey',
+                                    fontSize: "0.860rem",
+                                    whiteSpace: 'pre-line', // Enables line breaks
+                                    '&:hover': guest.remark?.split(" ").length > 7 ? {
+                                        cursor: 'pointer'
+                                    } : {}
+                                    }}
+                                >
+                                    <i>
+                                    {
+                                        guest.remark?.split(" ").length > 7
+                                        ? guest.remark.split(" ").slice(0, 4).join(" ") + "\n" + guest.remark.split(" ").slice(4, 7).join(" ") +" "+ "..."
+                                        : guest.remark
+                                    }
+                                    </i>
+                                </Typography>
+                            </Tooltip>
                         </Grid>
                         <Grid sx={{width: "9%",height: "100%",display: 'flex',justifyContent: "center",alignItems: 'center'}}>
                             <Grid sx={{width:"60px",height: "30px",bgcolor: "#90E0EF",border: '1px solid #0077B6',borderRadius: "5px",display: 'flex',justifyContent: "center",alignItems: 'center'}}>
@@ -450,7 +460,7 @@ const formatDate = (dateStr) => {
                 </Grid>
                 ) : (
                 <Typography sx={{ padding: "30px 0", textAlign: "center", color: "grey", fontSize: "1rem" }}>
-                    No items to display
+                    No data to display
                 </Typography>
                 )}
 

@@ -197,7 +197,7 @@ export const Home = () => {
         </Grid>
       </Box>
       <Gallary/>
-      <Location/>
+      <Location checkin={checkindate} checkout={checkoutdate} room={room} guest={guest}/>
       <Footer/>
     </Box>
   );

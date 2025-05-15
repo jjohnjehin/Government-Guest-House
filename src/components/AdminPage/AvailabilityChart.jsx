@@ -46,7 +46,7 @@ const[allData,setAllData]=useState([])
 console.log("ALLDATA:",allData)
 useEffect(()=>{
     axios
-    .get("http://localhost:3001/allData")
+    .get("http://localhost:5000/bookings")
     .then((res)=>{
         const data=res.data
         setAllData(data)
@@ -59,9 +59,9 @@ const selectedMonth = selectedDate ? new Date(selectedDate).getMonth() + 1 : nul
   const filteredData = allData.filter(data => {
     const locationMatch =
       activeTab === "Nagercoil"
-        ? data.Location === "Nagercoil"
+        ? data.selectedLocation === "Nagercoil"
         : activeTab === "Kanyakumari"
-        ? data.Location === "Kanyakumari"
+        ? data.selectedLocation === "Kanyakumari"
         : true;
 
     const dataMonth = new Date(data.date).getMonth() + 1;
@@ -220,17 +220,17 @@ const formatDate = (dateStr) => {
                             <Grid container sx={{width:"100%",height:"50px",borderBottom:"1px solid #0000001F ",display:"flex",alignItems:"center"}}>
                                 <Grid item size={{lg:3}}sx={{paddingLeft:"30px"}}>
                                     <Typography sx={{ fontSize: "0.875rem" }}>
-  {formatDate(item.date)}
+  {formatDate(item.checkin)}
 </Typography>
 
                                     <Typography sx={{fontSize:"0.875rem",color:'#7A7A7A'}}>{item.day}</Typography>
                                 </Grid>
-                                <Grid item size={{lg:3}}sx={{fontSize:"0.875rem"}}>{item.Location}</Grid>
+                                <Grid item size={{lg:3}}sx={{fontSize:"0.875rem"}}>{item.selectedLocation}</Grid>
                                 <Grid item size={{lg:3}} sx={{paddingLeft:"30px"}}>
-                                    <Typography sx={{color:'green',fontSize:"17px",fontWeight:"600"}}>{item.suite_room}<span style={{color:"grey",fontSize:"17px"}}>/8</span></Typography>
+                                    <Typography sx={{color:'green',fontSize:"17px",fontWeight:"600"}}>{item.suite_room||0}<span style={{color:"grey",fontSize:"17px"}}>/8</span></Typography>
                                 </Grid>
                                 <Grid item size={{lg:3}} sx={{paddingLeft:"30px"}}>
-                                    <Typography sx={{color:"green",fontSize:"17px",fontWeight:"600"}}>{item.delux_room}<span style={{color:'grey',fontSize:"17px"}}>/8</span></Typography>
+                                    <Typography sx={{color:"green",fontSize:"17px",fontWeight:"600"}}>{item.delux_room||0}<span style={{color:'grey',fontSize:"17px"}}>/8</span></Typography>
                                 </Grid>
                             </Grid>
                         ))}

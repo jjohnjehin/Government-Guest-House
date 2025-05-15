@@ -34,6 +34,7 @@ export const AdminHome=()=>{
         return "27%";
       };
       const [guests, setGuests] = useState([]);
+      console.log("guestsss:",guests)
       const [statusCounts, setStatusCounts] = useState({
         All: 0,
         Pending: 0,
@@ -42,7 +43,7 @@ export const AdminHome=()=>{
       });
       
       useEffect(() => {
-        fetch("http://localhost:3001/guests")
+        fetch("http://localhost:5000/bookings")
           .then((res) => res.json())
           .then((data) => {
             setGuests(data);
@@ -58,6 +59,7 @@ export const AdminHome=()=>{
           });
       }, []);
       const filteredGuests=activeTab==="All"?guests:guests.filter(guest=>guest.Status===activeTab)
+      console.log("filtereddddd:",filteredGuests)
       // PAGINATION
       const [page, setPage] = React.useState(2);
       const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -338,8 +340,8 @@ export const AdminHome=()=>{
                                     <Typography sx={{ color: 'grey', fontSize: '13px' }}>{guest.designation}</Typography>
                                 </Grid>
                                 <Grid sx={{ width: '15%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                                    <Typography sx={{fontSize:"0.875rem"}}>{guest.category}</Typography>
-                                    <Typography sx={{ color: 'grey', fontSize: '13px' }}>{guest['guest type']}</Typography>
+                                    <Typography sx={{fontSize:"0.875rem"}}>{guest.guestType}</Typography>
+                                    <Typography sx={{ color: 'grey', fontSize: '13px' }}>{guest.designation}</Typography>
                                 </Grid>
                                 <Grid sx={{ width: '13%', display: 'flex' }}>
                                     <Grid sx={{ width: '45%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -370,15 +372,15 @@ export const AdminHome=()=>{
                                 <Grid sx={{ width: '17%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                     <Grid sx={{ height: '30%', display: 'flex', alignItems: 'center' }}>
                                     <Typography sx={{ color: 'grey' }}>
-                                        Rooms: <span style={{ color: 'black',fontSize:"0.875rem" }}>{guest.No_Of_Rooms},</span>
+                                        Rooms: <span style={{ color: 'black',fontSize:"0.875rem" }}>{guest.noOfRoom},</span>
                                     </Typography>
                                     <Typography sx={{ paddingLeft: '5px', color: 'grey' }}>
-                                        Guests: <span style={{ color: 'black' ,fontSize:"0.875rem"}}>{guest.No_Of_Guests}</span>
+                                        Guests: <span style={{ color: 'black' ,fontSize:"0.875rem"}}>{guest.noOfGuest}</span>
                                     </Typography>
                                     </Grid>
                                     <Grid sx={{ height: '30%', display: 'flex' }}>
-                                    <Typography sx={{ fontSize: '14px', color: '#006D77DE' ,fontSize:"0.875rem"}}>{guest.Room_Type}</Typography>
-                                    <Typography sx={{ fontSize: '14px',fontSize:"0.875rem" }}>, {guest.Location}</Typography>
+                                    <Typography sx={{ fontSize: '14px', color: '#006D77DE' ,fontSize:"0.875rem"}}>{guest.roomType}</Typography>
+                                    <Typography sx={{ fontSize: '14px',fontSize:"0.875rem" }}>, {guest.selectedLocation}</Typography>
                                     </Grid>
                                 </Grid>
                                 <Grid sx={{ width: '8%', display: 'flex', alignItems: 'center'}}>
@@ -393,7 +395,7 @@ export const AdminHome=()=>{
                                     
                                 </Grid>
                                 <Grid sx={{ width: '14%', display: 'flex', alignItems: 'center' }}>
-                                <Tooltip title={guest.Remarks?.split(" ").length > 7 ? guest.Remarks : ""}>
+                                <Tooltip title={guest.remark?.split(" ").length > 7 ? guest.remark : ""}>
                                     <Typography
                                         variant="h6"
                                         sx={{
@@ -401,16 +403,16 @@ export const AdminHome=()=>{
                                         color: 'grey',
                                         fontSize: "0.860rem",
                                         whiteSpace: 'pre-line', // Enables line breaks
-                                        '&:hover': guest.Remarks?.split(" ").length > 7 ? {
+                                        '&:hover': guest.remark?.split(" ").length > 7 ? {
                                             cursor: 'pointer'
                                         } : {}
                                         }}
                                     >
                                         <i>
                                         {
-                                            guest.Remarks?.split(" ").length > 7
-                                            ? guest.Remarks.split(" ").slice(0, 4).join(" ") + "\n" + guest.Remarks.split(" ").slice(4, 7).join(" ") +" "+ "..."
-                                            : guest.Remarks
+                                            guest.remark?.split(" ").length > 7
+                                            ? guest.remark.split(" ").slice(0, 4).join(" ") + "\n" + guest.remark.split(" ").slice(4, 7).join(" ") +" "+ "..."
+                                            : guest.remark
                                         }
                                         </i>
                                     </Typography>
